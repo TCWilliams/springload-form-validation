@@ -1,4 +1,3 @@
-
 import type { FormData, FormErrors } from '../types/form'
 
 /**
@@ -15,6 +14,7 @@ export function validateField(
   value: any,
   formData?: FormData
 ): string | null {
+
   if (name === 'email') {
     return /\S+@\S+\.\S+/.test(value) ? null : 'Please enter a valid email.'
   }
@@ -25,20 +25,8 @@ export function validateField(
       : 'Password must be longer than 8 characters.'
   }
 
-  if (name === 'colour') {
-    return value ? null : 'Please select a colour.'
-  }
-
-  if (name === 'animals') {
-    return value.length > 0
-      ? null
-      : 'Please select at least one animal.'
-  }
-
-  if (name === 'tigerType') {
-    if (formData?.animals.includes('Tiger')) {
-      return value ? null : 'Please specify type of tiger.'
-    }
+  if (formData?.animals.includes('Tiger') && name === 'tigerType') {
+    return value ? null : 'Please specify type of tiger.'
   }
   return null
 }
@@ -53,9 +41,7 @@ export function validateForm(formData: FormData): FormErrors {
   const errors: FormErrors = {
     email: '',
     password: '',
-    colour: '',
-    animals: '',
-    tigerType: ''
+    tigerType: '',
   }
 
   Object.entries(formData).forEach(([key, value]) => {

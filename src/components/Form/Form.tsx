@@ -11,8 +11,6 @@ import './form.css'
 const INITIAL_ERRORS: FormErrors = {
   email: '',
   password: '',
-  colour: '',
-  animals: '',
   tigerType: '',
 }
 
@@ -46,9 +44,9 @@ const Form: React.FC = () => {
     const { name, value, checked } = e.target
 
     // re-validate field on change if there was an error
-    if (errors[name as keyof typeof errors] !== '') {
+    if (errors[name as keyof FormErrors] !== '') {
       const error = validateField(name as keyof FormData, value, formData)
-      setErrors((prev) => ({ ...prev, [name as keyof typeof errors]: error }))
+      setErrors((prev) => ({ ...prev, [name]: error }))
     }
 
     if (name === 'animals') {
@@ -86,18 +84,15 @@ const Form: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const { email, password, colour, animals, tigerType } =
-      validateForm(formData)
+    const submitErrors = validateForm(formData)
 
     setErrors({
-      email,
-      password,
-      colour,
-      animals,
-      tigerType,
+      email: submitErrors.email,
+      password: submitErrors.password,
+      tigerType: submitErrors.tigerType,
     })
 
-    if (Object.keys(errors).length === 0) {
+  if (Object.values(submitErrors).every((err) => err === '')) {
       // No errors, submit the form
       console.log('Form submitted successfully:', formData)
       setSubmitted(true)
@@ -144,16 +139,12 @@ const Form: React.FC = () => {
         <ColourFieldset
           colours={COLOURS}
           selected={formData.colour}
-          error={errors.colour}
-          onBlur={handleBlur}
           onChange={handleChange}
         />
 
         <AnimalsFieldset
           animals={ANIMALS}
           selected={formData.animals}
-          error={errors.animals}
-          onBlur={handleBlur}
           onChange={handleChange}
         />
 
