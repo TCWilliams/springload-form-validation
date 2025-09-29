@@ -5,7 +5,7 @@ This project is a React form with custom validation, accessibility, and clean CS
 ## Features
 
 - **Form fields:** Email, Password, Colour (single choice), Animals (multi-choice), and conditional “Type of tiger” textbox.
-- **Validation:** Email format, password length, required fields, and conditional logic for “Type of tiger.”
+- **Validation:** Only the fields specified in the challenge are validated: email format, password length, and 'Type of tiger' (required only if Tiger is selected).
 - **Accessibility:** Proper labels, ARIA attributes, keyboard navigation, and error messages.
 - **Custom CSS:** using CSS variables for theming.
 - **Responsive design:** Works well on mobile and desktop.
