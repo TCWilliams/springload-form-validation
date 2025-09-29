@@ -25,9 +25,14 @@ export function validateField(
       : 'Password must be longer than 8 characters.'
   }
 
+  if (name === 'colour') {
+    return formData?.colour ? null : 'Please select a colour.'
+  }
+
   if (formData?.animals.includes('Tiger') && name === 'tigerType') {
     return value ? null : 'Please specify type of tiger.'
   }
+
   return null
 }
 
@@ -41,6 +46,7 @@ export function validateForm(formData: FormData): FormErrors {
   const errors: FormErrors = {
     email: '',
     password: '',
+    colour: '',
     tigerType: '',
   }
 

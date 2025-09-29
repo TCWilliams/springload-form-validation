@@ -1,12 +1,16 @@
 type ColourFieldsetProps = {
   colours: string[]
   selected: string
+  error: string
+  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const ColourFieldset: React.FC<ColourFieldsetProps> = ({
   colours,
   selected,
+  error,
+  onBlur,
   onChange,
 }) => (
   <div className="select-field">
@@ -22,13 +26,18 @@ const ColourFieldset: React.FC<ColourFieldsetProps> = ({
               name="colour"
               value={colour}
               checked={selected === colour}
+              onBlur={onBlur}
               onChange={onChange}
+              required
+              aria-describedby={error ? `${id}-error` : undefined}
+              aria-invalid={!!error}
             />
             {colour}
           </label>
         )
       })}
     </fieldset>
+    {<p className="error">{error}</p>}
   </div>
 )
 

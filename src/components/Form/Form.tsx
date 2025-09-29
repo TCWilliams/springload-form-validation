@@ -33,6 +33,32 @@ const Form: React.FC = () => {
   const [submitted, setSubmitted] = useState(false)
 
   /**
+   * Revalidates a field if it currently has an error.
+   * Used to provide immediate feedback when the user corrects a field.
+   * For the 'colour' field, revalidates using the new value.
+   * For other fields, revalidates using the current form data.
+   *
+   * @param name - The name of the field to revalidate.
+   * @param value - The new value to validate.
+   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const revalidateFieldsInError = (name: string, value: any) => {
+    if (errors[name as keyof FormErrors] !== '') {
+      if (name === 'colour') {
+        const error = validateField('colour', value, {
+          ...formData,
+          colour: value,
+        })
+        setErrors((prev) => ({ ...prev, colour: error ?? '' }))
+      } else {
+        const error = validateField(name as keyof FormData, value, formData)
+        setErrors((prev) => ({ ...prev, [name]: error ?? '' }))
+      }
+    }
+
+  }
+
+  /**
    * Handles input changes for all form fields, including checkboxes and text inputs.
    * Updates form state and re-validates the field if there was a previous error.
    *
@@ -44,10 +70,7 @@ const Form: React.FC = () => {
     const { name, value, checked } = e.target
 
     // re-validate field on change if there was an error
-    if (errors[name as keyof FormErrors] !== '') {
-      const error = validateField(name as keyof FormData, value, formData)
-      setErrors((prev) => ({ ...prev, [name]: error }))
-    }
+    revalidateFieldsInError(name, value)
 
     if (name === 'animals') {
       setFormData((prev) => {
@@ -89,10 +112,11 @@ const Form: React.FC = () => {
     setErrors({
       email: submitErrors.email,
       password: submitErrors.password,
+      colour: submitErrors.colour,
       tigerType: submitErrors.tigerType,
     })
 
-  if (Object.values(submitErrors).every((err) => err === '')) {
+    if (Object.values(submitErrors).every((err) => err === '')) {
       // No errors, submit the form
       console.log('Form submitted successfully:', formData)
       setSubmitted(true)
@@ -140,6 +164,8 @@ const Form: React.FC = () => {
           colours={COLOURS}
           selected={formData.colour}
           onChange={handleChange}
+          error={errors.colour}
+          onBlur={handleBlur}
         />
 
         <AnimalsFieldset

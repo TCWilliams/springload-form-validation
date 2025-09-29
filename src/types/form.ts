@@ -9,5 +9,6 @@ export type FormData = {
 export type FormErrors = {
   email: string
   password: string
+  colour: string
   tigerType: string
 }
