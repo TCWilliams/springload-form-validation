@@ -1,51 +1,45 @@
 .form-actions {
   display: flex;
-  gap: 1rem;
+  gap: var(--spacing-md);
   justify-content: flex-end;
   width: 100%;
 }
 
 .form-header {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  text-align: left;
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-lg);
 }
 
-.reset-button {
-  background-color: #666;
+.button {
   border: none;
-  border-radius: 0.25rem;
-  color: white;
+  border-radius: var(--border-radius);
   cursor: pointer;
   display: inline-block;
-  font-size: 1rem;
-  margin-top: 1rem;
-  padding: 0.75rem 1.5rem;
+  font-size: var(--font-size-base);
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
   text-align: center;
   text-decoration: none;
-  width: 48%;
-}
-
-.reset-button:hover {
-  background-color: #888;
-}
-
-.submit-button {
-  background-color: #0dad59;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 1rem;
-  margin-top: 1rem;
-  padding: 0.75rem 1.5rem;
-  text-align: center;
-  text-decoration: none;
+  text-transform: uppercase;
   width: 50%;
 }
 
+.submit-button {
+  background-color: var(--color-springload-green);
+
+}
+
 .submit-button:hover {
-  background-color: #0fc565;
+  background-color: var(--color-green-hover);
+}
+
+.reset-button {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.reset-button:hover {
+  background-color: var(--color-secondary-hover);
 }
 
 @media (max-width: 600px) {
@@ -56,14 +50,9 @@
     margin: 0;
   }
 
-  .form-field,
-  fieldset {
-    width: 100%;
-  }
-
   .form-actions {
     flex-direction: column;
-    gap: 0.25rem;
+    gap: var(--spacing-xs);
   }
 
   .submit-button,

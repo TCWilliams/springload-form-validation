@@ -31,6 +31,7 @@ const Form: React.FC = () => {
 
   const [errors, setErrors] = useState<FormErrors>({ ...INITIAL_ERRORS })
 
+  const [submitted, setSubmitted] = useState(false)
 
   /**
    * Handles input changes for all form fields, including checkboxes and text inputs.
@@ -67,7 +68,6 @@ const Form: React.FC = () => {
     }
   }
 
-
   /**
    * Handles blur events for all form fields.
    * Validates the field and updates the error state for that field.
@@ -97,7 +97,7 @@ const Form: React.FC = () => {
     if (Object.keys(submitErrors).length === 0) {
       // No errors, submit the form
       console.log('Form submitted successfully:', formData)
-      resetForm()
+      setSubmitted(true)
     }
   }
 
@@ -109,74 +109,79 @@ const Form: React.FC = () => {
       ...INITIAL_FORM_DATA,
     })
     setErrors({ ...INITIAL_ERRORS })
+    setSubmitted(false)
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      <FormField
-        label="Email"
-        type="email"
-        name="email"
-        required
-        value={formData.email}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        error={errors.email}
-      />
-
-      <FormField
-        label="Password"
-        type="password"
-        name="password"
-        placeholder="Must be longer than 8 characters"
-        required
-        value={formData.password}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        error={errors.password}
-      />
-
-      <ColourFieldset
-        colours={COLOURS}
-        selected={formData.colour}
-        error={errors.colour}
-        onBlur={handleBlur}
-        onChange={handleChange}
-      />
-
-      <AnimalsFieldset
-        animals={ANIMALS}
-        selected={formData.animals}
-        error={errors.animals}
-        onBlur={handleBlur}
-        onChange={handleChange}
-      />
-
-      {formData.animals.includes('Tiger') && (
+    <>
+      <form onSubmit={handleSubmit} noValidate>
         <FormField
-          label="Type of Tiger"
-          type="text"
-          name="tigerType"
-          value={formData.tigerType}
+          label="Email"
+          type="email"
+          name="email"
+          required
+          value={formData.email}
           onBlur={handleBlur}
           onChange={handleChange}
-          error={errors.tigerType}
+          error={errors.email}
         />
-      )}
 
-      <div className="form-actions">
-        <button
-          className="reset-button"
-          type="button"
-          onClick={() => resetForm()}
-        >
-          Reset
-        </button>
-        <button className="submit-button" type="submit">
-          Submit
-        </button>
-      </div>
-    </form>
+        <FormField
+          label="Password"
+          type="password"
+          name="password"
+          placeholder="Must be longer than 8 characters"
+          required
+          value={formData.password}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          error={errors.password}
+        />
+
+        <ColourFieldset
+          colours={COLOURS}
+          selected={formData.colour}
+          error={errors.colour}
+          onBlur={handleBlur}
+          onChange={handleChange}
+        />
+
+        <AnimalsFieldset
+          animals={ANIMALS}
+          selected={formData.animals}
+          error={errors.animals}
+          onBlur={handleBlur}
+          onChange={handleChange}
+        />
+
+        {formData.animals.includes('Tiger') && (
+          <FormField
+            label="Type of Tiger"
+            type="text"
+            name="tigerType"
+            value={formData.tigerType}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            error={errors.tigerType}
+          />
+        )}
+
+        <div className="form-actions">
+          <button
+            className="button reset-button"
+            type="button"
+            onClick={() => resetForm()}
+          >
+            Reset
+          </button>
+          <button className="button submit-button" type="submit">
+            Submit
+          </button>
+        </div>
+      </form>
+
+      <p>{submitted && 'Form submitted successfully!'}</p>
+    </>
   )
 }
 
