@@ -31,6 +31,7 @@ const Form: React.FC = () => {
 
   const [errors, setErrors] = useState<FormErrors>({ ...INITIAL_ERRORS })
 
+  // Used to show success message on submit
   const [submitted, setSubmitted] = useState(false)
 
   /**
@@ -80,21 +81,23 @@ const Form: React.FC = () => {
 
   /**
    * Handles form submission.
-   * Validates the entire form and updates error state. If no errors, logs form data and resets the form.
+   * Validates the entire form and updates error state. If no errors, logs form data and displays a success message.
    */
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const submitErrors = validateForm(formData)
+    const { email, password, colour, animals, tigerType } =
+      validateForm(formData)
+
     setErrors({
-      email: submitErrors.email ?? '',
-      password: submitErrors.password ?? '',
-      colour: submitErrors.colour ?? '',
-      animals: submitErrors.animals ?? '',
-      tigerType: submitErrors.tigerType ?? '',
+      email,
+      password,
+      colour,
+      animals,
+      tigerType,
     })
 
-    if (Object.keys(submitErrors).length === 0) {
+    if (Object.keys(errors).length === 0) {
       // No errors, submit the form
       console.log('Form submitted successfully:', formData)
       setSubmitted(true)

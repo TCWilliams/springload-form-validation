@@ -7,7 +7,7 @@ import type { FormData, FormErrors } from '../types/form'
  * @param name - The name of the field to validate.
  * @param value - The value of the field to validate.
  * @param formData - The full form data, used for conditional validation (e.g. tigerType).
- * @returns {string | null} Error message if invalid, otherwise null.
+ * @returns Error message if invalid, otherwise null.
  */
 export function validateField(
   name: string,
@@ -30,7 +30,6 @@ export function validateField(
   }
 
   if (name === 'animals') {
-    console.log(value);
     return value.length > 0
       ? null
       : 'Please select at least one animal.'
@@ -47,8 +46,8 @@ export function validateField(
 /**
  * Validates the entire form and returns an object containing error messages for each invalid field.
  *
- * @param {FormData} formData - The  form data to validate.
- * @returns {FormErrors} An object mapping field names to error messages (if any).
+ * @param formData - The  form data to validate.
+ * @returns An object mapping field names to error messages (if any).
  */
 export function validateForm(formData: FormData): FormErrors {
   const errors: FormErrors = {
