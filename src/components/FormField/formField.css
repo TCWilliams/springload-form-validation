@@ -1,0 +1,14 @@
+.text-input {
+  border: var(--border-width) solid var(--color-secondary);
+  border-radius: var(--border-radius);
+  box-sizing: border-box;
+  font-size: var(--font-size-base);
+  height: var(--spacing-xl);
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  width: 100%;
+}
+.text-input:focus {
+  border-color: var(--color-springload-green);
+  outline: none;
+}
